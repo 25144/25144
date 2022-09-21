@@ -1,0 +1,17 @@
+//测试类 模板
+	 public static void main(String[] args) {
+        int len = 100;
+        int max = 100;
+        int max1 = 12 ;
+        int testTime = 100000;
+        System.out.println("测试开始");
+        for (int i = 0; i < testTime; i++) {
+            int L = (int) ((Math.random()+1) * max);
+            int r = (int) ((Math.random() +1)* max1);
+            int P  = (int)((Math.random()+1)*max1);
+            Test01 test = new Test01();
+            //System.out.println(L+"   "+r+"   "+test.Test(L, r));
+            System.out.println(P+"  "+test.process(P));
+        }
+
+    }
