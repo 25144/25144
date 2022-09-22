@@ -1,0 +1,86 @@
+    /*g给定一个数n，现要用有限个不同的正整数的和表示1到n所有的整数，当这些正整数的个数最少时，输出最少是多少
+    *并输出最少时的方案数
+    * */
+    public static void main(String[] args) {
+        int max=1000;
+        int min=100;
+        int number= 10000;
+        Random random = new Random();
+        for (int i = 0; i < number; i++) {
+            int s = random.nextInt(max)%(max-min+1);
+            System.out.println(s);
+            process(s);
+            process1(s);
+
+        }
+    }
+
+    /*通过分析可以得知，
+    1.2^0+2^1+2^2+……+2^n-1能表示2^n与2^n-1之间所有的数，并且正整数数目最小。
+    2.方案数大多为(2^n-1) - (2^n-2) 如 10： 1 2 4 8, 1 2 4 7, 1 2 4 6, 1 2 4 5 .所以方案数为8-4=4种
+    3.如13：1 2 4 8, 1 2 4 7, 1 2 4 6; 1 2 4 5 总和小于13则不能。
+    */
+    public static void process(int n){
+        int count = -1;
+        int a = n;
+        if(n==1){
+            System.out.println(1+" "+1);
+        }
+        //求出这个数二进制最大一位
+        while (n!=0){
+            n = n >> 1;
+                count++;
+        }
+        int c = count;
+        int sum =(int) Math.pow(2,count+1);
+        int num = (int) Math.pow(2,count-1);
+        int num1 =(int) Math.pow(2,count-1);
+        while(sum-num1<a){
+            num--;
+            num1--;
+        }
+        System.out.print(c+1+"   "+num+"\n");
+    }
+    
+    
+    
+    
+    //通过快速幂来优化，可以减少pow方法的时间复杂度，从o(N)降到了o(logN)
+    
+   
+    public static void process1(int n){
+        int count = -1;
+        int a = n;
+        if(n==1){
+            System.out.println(1+" "+1);
+        }
+        //求出这个数二进制最大一位
+        while (n!=0){
+            n = n >> 1;
+            count++;
+        }
+        int c = count;
+        //快速幂
+        int sum =fastPower(2,count+1);
+        int num = fastPower(2,count-1);
+        int num1 =num;
+        while(sum-num1<a){
+            num--;
+            num1--;
+        }
+        System.out.print(c+1+"   "+num+"\n");
+    }
+
+
+    public static int fastPower(int a , int b){
+        int ans = 1;
+        int base = a;
+        while(b!=0){
+            if((b&1)!=0){
+                ans = ans*base;
+            }
+            base *= base;
+            b = b>>1;
+        }
+        return ans ;
+    }
